@@ -658,6 +658,7 @@
 		EA0AACE11BE315C1000E36D5 /* sellcenter_giveWine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA0AACE01BE315C1000E36D5 /* sellcenter_giveWine.jpg */; };
 		EA0AACE31BE33627000E36D5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0AACE21BE33627000E36D5 /* icon.png */; };
 		EA36FFF21BCF725C00BC8B45 /* shop_sell_PhoneCall.png in Resources */ = {isa = PBXBuildFile; fileRef = EA36FFF11BCF725C00BC8B45 /* shop_sell_PhoneCall.png */; };
+		EA6242371BE7000D0039A607 /* WebViewController+Hefff.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6242361BE7000D0039A607 /* WebViewController+Hefff.m */; };
 		EA6DDA371B7B1EC30097882C /* an_shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6DDA361B7B1EC30097882C /* an_shareIcon.png */; };
 		EA7F7AB51B5DDA30002BBD10 /* networkError.png in Resources */ = {isa = PBXBuildFile; fileRef = EA7F7AB41B5DDA30002BBD10 /* networkError.png */; };
 		EA7F7AB71B5DE387002BBD10 /* bgColor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA7F7AB61B5DE387002BBD10 /* bgColor.png */; };
@@ -1713,6 +1714,8 @@
 		EA0AACE01BE315C1000E36D5 /* sellcenter_giveWine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sellcenter_giveWine.jpg; sourceTree = "<group>"; };
 		EA0AACE21BE33627000E36D5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		EA36FFF11BCF725C00BC8B45 /* shop_sell_PhoneCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop_sell_PhoneCall.png; sourceTree = "<group>"; };
+		EA6242351BE7000D0039A607 /* WebViewController+Hefff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebViewController+Hefff.h"; sourceTree = "<group>"; };
+		EA6242361BE7000D0039A607 /* WebViewController+Hefff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebViewController+Hefff.m"; sourceTree = "<group>"; };
 		EA6DDA361B7B1EC30097882C /* an_shareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = an_shareIcon.png; sourceTree = "<group>"; };
 		EA7F7AB41B5DDA30002BBD10 /* networkError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = networkError.png; sourceTree = "<group>"; };
 		EA7F7AB61B5DE387002BBD10 /* bgColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgColor.png; sourceTree = "<group>"; };
@@ -2308,6 +2311,8 @@
 				2F0C34A71BC7A5FB00724D99 /* StarRate */,
 				2F0C34AC1BC7A5FB00724D99 /* User */,
 				2F0C34CB1BC7A5FB00724D99 /* WebView */,
+				EA6242351BE7000D0039A607 /* WebViewController+Hefff.h */,
+				EA6242361BE7000D0039A607 /* WebViewController+Hefff.m */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -4304,6 +4309,7 @@
 				2F0C327F1BC78C2C00724D99 /* UIView+Toast.m in Sources */,
 				2F0C34FA1BC7A5FB00724D99 /* OrderListController.m in Sources */,
 				C35386DB1B00704A0033F39C /* DataSigner.m in Sources */,
+				EA6242371BE7000D0039A607 /* WebViewController+Hefff.m in Sources */,
 				2F0C32681BC78C2C00724D99 /* SDRefreshView.m in Sources */,
 				2F0C34E71BC7A5FB00724D99 /* KKFirstViewController.m in Sources */,
 				C35386DA1B00704A0033F39C /* base64.m in Sources */,
