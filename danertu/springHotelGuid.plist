@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>hotelGuidArr</key>
+	<array>
+		<string>1d22fec3-c2c7-467b-abbe-0432b252e5a3</string>
+		<string>b33144b9-e809-4894-9d31-081f00f43a00</string>
+		<string>84d4c18b-79b9-41ed-9424-0fca6839beeb</string>
+		<string>67269b0a-5265-4ee5-b991-317414191c28</string>
+		<string>04173c8e-b7bd-413c-a963-41cce7e7faee</string>
+		<string>73345f23-d35f-4f9f-a9c7-427500657957</string>
+		<string>233c3bf7-c42d-47c5-a7b3-57b9139cbe7b</string>
+		<string>452961bd-fa6e-47c6-b77c-588af83a9c73</string>
+		<string>3b8d53c9-ec37-4411-ab5e-63ba5be29c4c</string>
+		<string>6bdee8c4-2b2d-4052-9c18-91918b279a06</string>
+		<string>3a8071e8-c710-4199-99b1-9a0fa5894154</string>
+		<string>fe9288cd-0582-4901-b59f-be44a9a83edc</string>
+		<string>98fd0179-647d-4419-ba2c-c47b488b484a</string>
+		<string>815d0755-9a51-450d-a8f3-c551ae7c18dd</string>
+		<string>d8162986-e0b6-4a12-ba08-c8e657c2ac9a</string>
+		<string>b8cdd0f8-f26a-4219-9997-cc3fa397d76b</string>
+		<string>eb04ed47-3083-4eee-aa9c-cdfc6e78098e</string>
+		<string>495c5375-0e98-4537-928e-e18ac3e9b38d</string>
+		<string>20d7d9ad-4913-4d34-a61e-f757220ad1d8</string>
+	</array>
+	<key>springGuidArr</key>
+	<array>
+		<string>4713442b-505a-47a0-b490-09a6b2c6c662</string>
+		<string>2ad4ee2c-bb98-44ba-b5a5-0dc152d7a0e8</string>
+		<string>9724ab16-2a50-452d-9c0e-423f0aeaaf26</string>
+		<string>a6852148-4805-4c3c-80fb-829f69f5d23e</string>
+		<string>21ddf0e1-3b22-45b8-9c71-92084b523750</string>
+	</array>
+	<key>New item</key>
+	<string></string>
+</dict>
+</plist>

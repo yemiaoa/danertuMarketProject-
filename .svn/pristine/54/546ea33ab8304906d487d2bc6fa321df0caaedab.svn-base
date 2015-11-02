@@ -1,0 +1,62 @@
+//
+//  SellShopCell.m
+//  单耳兔
+//
+//  Created by yang on 15/7/3.
+//  Copyright (c) 2015年 珠海单耳兔电子商务有限公司. All rights reserved.
+//
+
+#import "SellShopCell.h"
+
+@implementation SellShopCell
+@synthesize shopImage;
+@synthesize shopNameLabel;
+@synthesize shopNumberLabel;
+@synthesize realNameLabel;
+@synthesize mobileLabel;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAINSCREEN_WIDTH, 80)];
+        [self addSubview:bgView];
+        [bgView setBackgroundColor:[UIColor whiteColor]];
+        
+        shopImage = [[AsynImageView alloc] initWithFrame:CGRectMake(15, 10, 60, 60)];
+        [self addSubview:shopImage];
+        
+        shopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 20, 150, 20)];
+        [self addSubview:shopNameLabel];
+        [shopNameLabel setFont:TEXTFONT];
+        
+        UILabel *orderTip = [[UILabel alloc] initWithFrame:CGRectMake(80, 45, 80, 20)];
+        [self addSubview:orderTip];
+        [orderTip setText:@"网店数量:"];
+        [orderTip setFont:TEXTFONTSMALL];
+        
+        shopNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 45, 100, 20)];
+        [self addSubview:shopNumberLabel];
+        [shopNumberLabel setFont:TEXTFONTSMALL];
+        
+        realNameLabel = [[UILabel alloc] init];
+        [realNameLabel setFont:TEXTFONTSMALL];
+        
+        mobileLabel = [[UILabel alloc] init];
+        [mobileLabel setFont:TEXTFONTSMALL];
+
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

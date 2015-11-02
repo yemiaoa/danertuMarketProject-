@@ -1,0 +1,308 @@
+//
+//  WebViewController.m
+//  Tuan
+//
+//  Created by 夏 华 on 12-7-6.
+//  Copyright (c) 2012年 无锡恩梯梯数据有限公司. All rights reserved.
+//
+
+#import "ClassifyViewController.h"
+#import "DataModle.h"
+#import "GridViewCell.h"
+#import "DetailViewController.h"
+#import "UIImageView+WebCache.h"
+#import "Waiting.h"
+
+@interface ClassifyViewController ()
+{
+    NSMutableArray *arrays;
+    NSArray *classifyDataArr;
+    NSDictionary *selectTypeDic;
+}
+
+@end
+
+@implementation ClassifyViewController
+@synthesize scrollView;
+
+@synthesize defaults;
+@synthesize scrollViewStartY;
+
+@synthesize classifyArea;
+@synthesize topView;
+@synthesize topViewTitle;
+@synthesize shopID;
+
+- (void)loadView
+{
+    [super loadView];
+    // If you create your views manually, you MUST override this method and use it to create your views.
+    // If you use Interface Builder to create your views, then you must NOT override this method.
+}
+
+- (void)viewDidLoad
+{
+    addStatusBarHeight = STATUSBAR_HEIGHT;
+    defaults =[NSUserDefaults standardUserDefaults];//读取本地化存储
+    arrays = [[NSMutableArray alloc] init];//初始化
+    //[self.navigationController.tabBarItem setBadgeValue:@"11"];//设置badge
+    
+    [super viewDidLoad];
+    self.view.backgroundColor = VIEWBGCOLOR;
+    //----返回----
+    UIButton *goBack = [[UIButton alloc] initWithFrame:CGRectMake(10, 2+addStatusBarHeight, 53.5, 40)];
+    [self.view addSubview:goBack];
+    [goBack setBackgroundImage:[UIImage imageNamed:@"gobackBtn"] forState:UIControlStateNormal];
+    [goBack addTarget:self action:@selector(onClickBack) forControlEvents:UIControlEventTouchUpInside];
+    
+    //文字
+    UILabel *topNaviText = [[UILabel alloc] initWithFrame:CGRectMake(60, 0+addStatusBarHeight, 200, TOPNAVIHEIGHT)];
+    topNaviText.text = @"分类";
+    topNaviText.font = [UIFont systemFontOfSize:18];
+    topNaviText.textColor = [UIColor whiteColor];
+    topNaviText.userInteractionEnabled = YES;//这样才可以点击
+    topNaviText.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:topNaviText];
+    
+    //搜索-----
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(100, 7+addStatusBarHeight, 180, 30)];
+    [self.view addSubview:searchView];
+    searchView.userInteractionEnabled = YES;
+    searchView.backgroundColor = [UIColor whiteColor];
+    [searchView.layer setMasksToBounds:YES];
+    [searchView.layer setCornerRadius:15.0];//设置矩形四个圆角半径
+    UITapGestureRecognizer *singleTap1 =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(toSearchView)];
+    [searchView addGestureRecognizer:singleTap1];//---添加点击事件
+    //搜索图标
+    UIImageView *searchIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 20, 20)];
+    [searchView addSubview:searchIcon];
+    searchIcon.backgroundColor = [UIColor clearColor];
+    searchIcon.image = [UIImage imageNamed:@"magnifying"];
+    //索搜文字
+    UILabel *searchText = [[UILabel alloc] initWithFrame:CGRectMake(33, 1, 150, 30)];
+    [searchView addSubview:searchText];
+    searchText.backgroundColor = [UIColor whiteColor];
+    searchText.font = TEXTFONT;
+    searchText.text = @"搜索单耳兔商品/店铺";
+    searchText.textColor = [UIColor grayColor];
+    searchText.textAlignment = NSTextAlignmentLeft;
+
+    //扫描按钮
+//    UIButton *scanBtn = [[UIButton alloc] initWithFrame:CGRectMake(260, 7+addStatusBarHeight, 60, 30)];
+//    [self.view addSubview:scanBtn];
+    
+    //获取一级分类
+    [self getClassifyData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    //代理置空，否则会闪退
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    //开启iOS7的滑动返回效果
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        //只有在二级页面生效
+        NSLog(@"%@",self.navigationController.viewControllers);
+        if ([self.navigationController.viewControllers count] >= 2) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+        else{
+            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+            self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+        }
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
+    else{
+        navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
+//获取一级分类---
+-(void)getClassifyData{
+    [Waiting show];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:APIURL]];
+    NSDictionary * params = @{@"apiid": @"0073"};
+    NSURLRequest * request = [httpClient requestWithMethod:@"POST"
+                                                      path:@""
+                                                parameters:params];
+    AFHTTPRequestOperation * operationItem = [httpClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operationItem, id responseObject) {
+        [Waiting dismiss];
+        NSString *source = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"jgorejgojroinobrt-----%@",source);
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        classifyDataArr = [[jsonData objectForKey:@"firstCategoryList"] objectForKey:@"firstCategorybean"];
+        if (classifyDataArr.count>0) {
+            [self createClassifyView];
+        }else{
+            [self.view makeToast:@"数据错误:0073,请稍后重试" duration:1.5 position:@"center"];
+        }
+    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"faild , error == %@ ", error);
+        [Waiting dismiss];
+        [self.view makeToast:@"网络错误请重试" duration:1.5 position:@"center"];
+    }];
+    [operationItem start];
+}
+//-----创建view
+-(void)createClassifyView{
+    //----------商品分类----------
+    /*
+     *------------------商品分类,之前的搜索被遮挡在下面------如果以后不用可以删除--------
+     */
+    classifyArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0, TOPNAVIHEIGHT+addStatusBarHeight, MAINSCREEN_WIDTH, CONTENTHEIGHT+49)];
+    [self.view addSubview:classifyArea];//----分类----
+    classifyArea.backgroundColor = VIEWBGCOLOR;
+    NSArray *itemArr = @[@"酒水",@"食品",@"生活用品",@"家电",@"旅游",@"白酒/红酒/黄酒",@"进口食品/休闲食品/生鲜蔬菜",@"居家日用/美容护肤/箱包皮具",@"影音电器/生活电器/厨房电器",@"特价酒店/旅游路线/景点门票",@"classifyImg_wine_B",@"classifyImg_foodstuff_B",@"classifyImg_appliance_B",@"classifyImg_livingGoods_B",@"classifyImg_travel_B",@"0",@"1",@"2",@"3",@"4"];
+    int count = itemArr.count/4;
+    int classifyItemHeight = 70;
+    classifyArea.contentSize = CGSizeMake(MAINSCREEN_WIDTH, classifyItemHeight * count);
+    for (int i=0;i<count;i++) {
+        NSInteger classifyId = [itemArr[i+count*3] integerValue];
+        UIView *item = [[UIView alloc] initWithFrame:CGRectMake(0, i*classifyItemHeight, MAINSCREEN_WIDTH, classifyItemHeight)];
+        [classifyArea addSubview:item];//
+        item.userInteractionEnabled = YES;
+        item.tag = 100 + classifyId;
+        item.accessibilityIdentifier = [classifyDataArr[i] objectForKey:@"ID"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClassifyItem:)];
+        [item addGestureRecognizer:tap];
+        
+        //图片-----网络图片
+        AsynImageView *img = [[AsynImageView alloc] initWithFrame:CGRectMake(20, 10, 50, 50)];
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",DANERTUPRODUCT,[classifyDataArr[i] objectForKey:@"PhoneImage"]];
+        if ([imageUrl isMemberOfClass:[NSNull class]] || imageUrl == nil) {
+            imageUrl = @"";
+        }
+        img.layer.borderWidth = 0;
+        img.layer.borderColor = [[UIColor clearColor] CGColor];
+        img.layer.cornerRadius = 3.0;
+        img.layer.masksToBounds = YES;
+        img.placeholderImage = [UIImage imageNamed:@"noData1"];
+        img.imageURL = imageUrl;
+        [item addSubview:img];//
+        
+        
+        //标题-----网络标题
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, 220, 30)];
+        [item addSubview:title];//
+        [title setFont:[UIFont fontWithName:@"Helvetica" size:18]];
+        title.text = [classifyDataArr[i] objectForKey:@"Name"];
+        title.backgroundColor = [UIColor clearColor];
+        //描述-------写死数据
+        UILabel *descrip = [[UILabel alloc] initWithFrame:CGRectMake(90, 40, 200, 20)];
+        [item addSubview:descrip];//
+        descrip.text = itemArr[i+count];
+        descrip.font = [UIFont systemFontOfSize:14];
+        descrip.textColor = [UIColor grayColor];
+        descrip.backgroundColor = [UIColor clearColor];
+        //边线
+        UIImageView *border = [[UIImageView alloc] initWithFrame:CGRectMake(10, 69.4, MAINSCREEN_WIDTH - 20, 0.6)];
+        [item addSubview:border];
+        border.image = [UIImage imageNamed:@"horizonBorder"];
+    }
+}
+
+//-----点击返回
+-(void)onClickBack
+{
+    if ([self.navigationController.viewControllers count] == 1) {
+        [self.tabBarController setSelectedIndex:0];
+        [self setBarItemSelectedIndex:0];
+    }
+    else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+
+-(void)setBarItemSelectedIndex:(NSUInteger)selectedIndex{
+    for (int i = 0; i < 5; i++) {
+        UIColor *rightColor = (i==selectedIndex) ? TABBARSELECTEDCOLOR : TABBARDEFAULTCOLOR;
+        [(UITabBarItem *)[self.tabBarController.tabBar.items objectAtIndex:i] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightColor, UITextAttributeTextColor, nil] forState:UIControlStateNormal];
+    }
+}
+
+//---跳转到搜索
+-(void) toSearchView{
+    [self performSegueWithIdentifier:@"searchView" sender:self];
+}
+//---第一次选择---
+-(void)tapClassifyItem:(id)sender{
+    //[(UIView*)sender
+    //((UIView*)sender).frame.origin.x = -160;
+    /*
+    UIView *item = [sender view];
+    CGRect frame = item.frame;
+    frame.origin.x = -160;
+    item.frame = frame;
+    */
+    NSInteger tag = [[sender view] tag] - 100;
+    selectTypeDic = @{@"ID":[classifyDataArr[tag] objectForKey:@"ID"],@"Name":[classifyDataArr[tag] objectForKey:@"Name"],@"indexTag":[NSNumber numberWithInteger:tag]};
+    ClassifyDetailController *classDetailView = [[ClassifyDetailController alloc] init];
+    classDetailView.shopID = self.shopID;
+    classDetailView.hidesBottomBarWhenPushed = YES;
+    classDetailView.selectTypeDic = selectTypeDic;
+    classDetailView.classifyDataArr = classifyDataArr;
+    //在切换界面的过程中禁止滑动手势，避免界面卡死
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+    [self.navigationController pushViewController:classDetailView animated:YES];
+    
+}
+//---清空搜索记录
+-(void) onClickDelete{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"确定要清空搜索记录吗"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil];
+    [alert addButtonWithTitle:@"清空"];
+    [alert setTag:1];
+    [alert show];
+}
+
+//----------确定清空
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] ==1 ) {
+    }
+}
+
+//---------跳转
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"classifyDetail"]) {
+        ClassifyDetailController *classDetailView = [segue destinationViewController];
+        classDetailView.hidesBottomBarWhenPushed = YES;
+        classDetailView.selectTypeDic = selectTypeDic;
+        classDetailView.classifyDataArr = classifyDataArr;
+        //在切换界面的过程中禁止滑动手势，避免界面卡死
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+        }
+        
+    }else if ([segue.identifier isEqualToString:@"searchView"]) {
+        SearchViewController *classDetailView = [segue destinationViewController];
+        classDetailView.hidesBottomBarWhenPushed = YES;
+        //在切换界面的过程中禁止滑动手势，避免界面卡死
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+        }
+    }
+    
+}
+
+//-----------内存不足报警------
+-(void)didReceiveMemoryWarning
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [super didReceiveMemoryWarning];
+}
+@end

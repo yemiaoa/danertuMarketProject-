@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E90919FC-0531-4633-8BE9-30BF357B8803",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378" : "danertuWorkplace\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "单耳兔",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "danertuMarketProject20151009\/单耳兔.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.168.1.253:8443\/svn\/iosmobile",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378"
+    }
+  ]
+}

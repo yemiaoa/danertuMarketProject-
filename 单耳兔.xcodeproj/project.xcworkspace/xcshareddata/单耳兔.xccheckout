@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E90919FC-0531-4633-8BE9-30BF357B8803</string>
+	<key>IDESourceControlProjectName</key>
+	<string>单耳兔</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378</key>
+		<string>https://192.168.1.253:8443/svn/iosmobile/%25E5%258D%2595%25E8%2580%25B3%25E5%2585%2594%25E9%25A1%25B9%25E7%259B%25AE/danertuMarketProject</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>单耳兔.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378</key>
+		<string>https://192.168.1.253:8443/svn/iosmobile</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://192.168.1.253:8443/svn/iosmobile/%25E5%258D%2595%25E8%2580%25B3%25E5%2585%2594%25E9%25A1%25B9%25E7%259B%25AE/danertuMarketProject/%E5%8D%95%E8%80%B3%E5%85%94.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>c17b86c5-f427-7e45-b5fe-89fe54d3c4c0++1378</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
+	</array>
+</dict>
+</plist>

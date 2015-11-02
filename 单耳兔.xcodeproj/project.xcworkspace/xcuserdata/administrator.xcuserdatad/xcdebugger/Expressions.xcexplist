@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[KKFirstViewController viewDidLoad]:KKFirstViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tabBarItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[TabBarController viewDidLoad]:TabBarController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tabBar">
+            </PersistentString>
+            <PersistentString
+               value = "self.tabBar.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[WoodsController gridView:didSelectItemAtIndex:]:WoodsController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "super">
+            </PersistentString>
+            <PersistentString
+               value = "cell">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

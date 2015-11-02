@@ -1,0 +1,198 @@
+//
+// Prefix header for all source files of the 'Tuan' target in the 'Tuan' project
+//
+
+#import <Availability.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "UIViewController+HUD.h"
+    #import "Tools.h"
+    #import "AFOSCClient.h"
+    #import "JSONKit.h"
+    #import "HeBaseViewController.h"
+    #import "Waiting.h"
+#endif
+
+#ifdef DEBUG
+#    define DLog(...) NSLog(__VA_ARGS__)
+//webview是否清除缓存(调试的时候保留缓存，发布的时候清除缓存)
+#define CLEARWEBCACHE (YES)
+
+#else
+#    define DLog(...) /* */
+//webview是否清除缓存(调试的时候保留缓存，发布的时候清除缓存)
+#define CLEARWEBCACHE (YES)
+
+#endif
+#define ALog(...) NSLog(__VA_ARGS__)
+#define iOS7   ([UIDevice currentDevice].systemVersion.floatValue >= 6.9)
+#define iOS8   ([UIDevice currentDevice].systemVersion.floatValue >= 7.9)
+#define iOS9   ([UIDevice currentDevice].systemVersion.floatValue >= 8.9)
+#define iOS7OFFSET 64
+//内网接口地址
+//#define APIURL @"http://192.168.1.137:511/RequestApi.aspx"
+#define APIURL @"http://115.28.55.222:8085/RequestApi.aspx"
+#define AGREEMENTURL @"http://www.danertu.com/IOS/agreement.aspx"
+//代理商(AgentID),自营店商品
+//图片服务器地址
+#define IMAGESERVER @"http://img.danertu.com/"
+
+#define MEMBERPRODUCT  ([NSString stringWithFormat:@"%@Member/",IMAGESERVER])
+
+//供应商(SupplierLoginID),店铺详细页下边,温泉,客房,....
+#define SUPPLIERPRODUCT ([NSString stringWithFormat:@"%@SupplierProduct/",IMAGESERVER])
+
+
+//平台,单耳兔酒
+#define DANERTUPRODUCT ([NSString stringWithFormat:@"%@sysProduct/",IMAGESERVER])
+
+#define SHARE_IOS @"http://115.28.55.222:8085/indexios.aspx"
+//分类图标----
+#define CLASSIFYIMG ([NSString stringWithFormat:@"%@catoryImg/",IMAGESERVER])
+
+//keychain  保存的数据
+#define USERNAME_KEY @"com.danertu.www.username"
+#define PASSWORD_KEY @"com.danertu.www.password"
+//defaults存储的字符串常量,购物车数据取代之前的"ClientWoodsArray"
+#define SHOPCATWOODSARR @"shopCatWoodsArrV139"
+//购物车勾选的,要去支付的商品  数组
+#define PAYOFFWOODSARR @"payOffWoodsArr"
+//购物车所有商品数量
+#define SHOPCATWOODSCOUNT @"shopCatWoodsCountV139"
+//收藏商品
+#define FAVORITEWOODSARR @"favoriteWoodsListV136"
+
+//温泉门票,客房店铺supplierId
+#define SPRINGSUPPLIERID @"shopnum1"
+//活动名称标示字符串,依次是 "0.1元购","1元专区","特价区","春节买几赠几"
+#define ACTIVITY_ZEROONE @"zeroOneForProduct"
+#define ACTIVITY_ONEYUAN @"OneYuanArea"
+#define ACTIVITY_SPECIAL @"specialOffer"
+#define ACTIVITY_SPRING @"chunJieMaiZeng"
+
+//醇康店铺id--春节买1赠1,买2赠1活动---
+#define CHUNKANGSHOPID @"15017339307"
+//chunkang
+
+//屏蔽一元礼包的guid
+#define LIBAOGUID @"edb05b72-10fd-4902-843d-ba11be607adb"
+
+//住完购,定送餐
+#define ZHUWANGOU @"zhuwangou"
+#define DINGSONGCAN @"dingsongcan"
+#define YANJIUCHA @"yanjiucha"
+
+#define ISSHOWQRCODE (YES)
+//是否测试支付的金额
+#define isTestPayMoney (NO)
+
+//是否是测试uuid,无限更换uuid
+#define ISTESTUUID (NO)
+
+//普通用户版
+#define UMANALYSISKEY @"53db3e3cfd98c55a2d00210e"
+#define isInnerVersion (NO)
+
+//shareSDK的key
+#define SHARESDKKEY @"2d12e9c2017c"
+//腾讯微博的key
+#define TencentWeiboKey @"1102297706"
+#define TencentWeiboAppSecret @"1FmAZ0qh1scPjMj8"
+#define QZoneAppKey @"1102297706"
+#define WeChatAppId @"wx58f1866c456080f3"
+//-----公司业务版----
+//#define UMANALYSISKEY @"53f45cfffd98c538ee00126a"
+//#define isInnerVersion (YES)
+
+
+#define TOPNAVIHEIGHT 44
+#define CONTENTHEIGHT (self.view.frame.size.height - addStatusBarHeight - TOPNAVIHEIGHT - 45)
+#define WINDOWHEIGHT ([UIApplication sharedApplication].keyWindow.frame.size.height)
+
+#define STATUSBAR_HEIGHT (iOS7 ? 20 : 0)  //状态栏高度
+
+#define MAINSCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define MAINSCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+#define TEXTFONT ([UIFont systemFontOfSize:15])
+#define TEXTFONTSMALL ([UIFont systemFontOfSize:12])
+#define TOPNAVIBGCOLOR ([UIColor colorWithRed:196.0/255 green:0 blue:0 alpha:1])
+#define TOPNAVIBGCOLOR_G ([UIColor colorWithRed:53.0/255 green:163.0/255 blue:124.0/255 alpha:1])
+//([UIColor colorWithRed:53.0/255 green:163.0/255 blue:124.0/255 alpha:1])
+#define BUTTONCOLOR ([UIColor colorWithRed:220.0/255 green:5.0/255 blue:5.0/255 alpha:1])
+#define BUTTONCOLOR_Y ([UIColor colorWithRed:238.0/255 green:146.0/255 blue:0 alpha:1])
+#define VIEWBGCOLOR ([UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1])
+#define BORDERCOLOR ([UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1])
+#define TABLEBGCOLOR ([UIColor colorWithRed:235.0/255 green:235.0/255 blue:235.0/255 alpha:1])
+//购物车item 的index值
+
+#define SHOPCATINDEX 2
+
+#define MYINDEX 3
+
+#define SHAREINDEX 4
+
+#define AESKEY @"abcdef1234567890"
+#define SCREENWIDTH ([UIScreen mainScreen].bounds.size.width) 
+#define REQUESTERRORTIP @"网络出错，请稍后重试!"  //网络加载错误提示
+
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double ) 568 ) < DBL_EPSILON )
+//#define REDIRECTSHOPID @""
+
+//#define INDEXWEBURL @"http://115.28.55.222:8017/IOSIndex6.htm?919"
+//#define INDEXWEBURL @"http://192.168.1.137:778/IOsIndex6.htm?jifi"
+//#define INDEXWEBURL @"http://192.168.3.105/mu/IOSDefault.htm"
+
+//#define INDEXWEBURL @"IOSIndex6.htm"
+//首页名称
+#define INDEXPAGENAME @"IOSIndex6.html?mui"
+
+
+#define TABBARSELECTEDCOLOR ([UIColor colorWithRed:255.0 / 255.0 green:48.0 / 255.0 blue:0 alpha:1])
+#define TABBARDEFAULTCOLOR ([UIColor colorWithWhite:140.0 / 255.0 alpha:1.0])
+
+//内网测试页面地址
+//#define ROOTPAGEURLADDRESS @"http://192.168.1.137:778"
+//#define PAGEURLADDRESS @"http://192.168.1.137:778/ios_webPage"
+
+#define GOODSDETAILSHAREURL @"http://www.danertu.com/mobile/appWebOrder/pro_detail.htm"
+//外网正式页面地址
+#define ROOTPAGEURLADDRESS @"http://115.28.55.222:8018"
+#define PAGEURLADDRESS @"http://115.28.55.222:8018/ios_webPage"
+
+//外网测试页面地址
+//#define ROOTPAGEURLADDRESS @"http://115.28.55.222:8019"
+//#define PAGEURLADDRESS @"http://115.28.55.222:8019/ios_webPage"
+
+//版本更新的标记  空为正常版本 test为测试版本 shopid为定制版本
+#define SHOPID @"13192260771"
+//版本标记 空为正常版本 test为测试版本 shopid为定制版本
+#define UPDATEMARK @""
+
+//AppStore下载链接
+#define APPSTOREDOWNLOADURL (@"https://itunes.apple.com/cn/app/dan-er-tu-shang-cheng/id894307888?mt=8")
+
+#define SELLERURLADDRESS PAGEURLADDRESS
+#define DEVICE_UUID @"com.danertu.chunkang"
+
+
+#define SHAREURL @"http://115.28.55.222:8085/det_download.html"
+
+#define DEFAULTIMAGEURL @"http://img.danertu.com/pptImage/pic_store.jpg"
+//单耳兔商城服务协议
+#define DANERTUSERVICEPROTOCOL @"http://115.28.55.222:8018/AppSellerRules2_1.html"
+//单耳兔禁售管理规范
+#define DANERTUSELLPROTOCOL  @"http://115.28.55.222:8018/AppSellerRules1_1.html"
+//当清理所有的推送标签的时候默认的标签
+#define DEFAULTPUSHTAG @"xTdn8EVY3TeyCXrdkjaMdHOv"
+//AppStore使用
+#define BAIDUMAPKEY @"xTdn8EVY3TeyCXrdkjaMdHOv"
+//第三方平台使用
+//#define BAIDUMAPKEY @"HYStNH3QWHaMpZEtSGIxEokt"
+

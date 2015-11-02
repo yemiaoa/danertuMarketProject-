@@ -1,0 +1,26 @@
+//
+//  WebViewController.h
+//  Tuan
+//
+//  Created by 夏 华 on 12-7-6.
+//  Copyright (c) 2012年 无锡恩梯梯数据有限公司. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "UIView+Toast.h"
+#import "AFHTTPClient.h"
+#import "ClassifyDetailController.h"
+#import "SearchViewController.h"
+#define HOT_ITEM_COUNT 6 //热门搜索 条目 数
+#define SCROLL_CONTENT_GAP 20 //热门搜索 条目 数
+
+@interface ClassifyViewController : HeBaseViewController
+@property (nonatomic, strong) UIScrollView *scrollView;// 滑动区域
+@property (nonatomic, strong) NSUserDefaults *defaults;//本地化存储
+@property (nonatomic) int scrollViewStartY;//滑动区域开始Y坐标
+
+
+@property (nonatomic, strong)UIScrollView *classifyArea;
+@property (nonatomic, strong)UIView *topView;
+@property (nonatomic, strong)UILabel *topViewTitle;
+@end

@@ -1,0 +1,326 @@
+//
+//  DetailViewController.m
+//  Tuan
+//
+//  Created by 夏 华 on 12-7-4.
+//  Copyright (c) 2012年 无锡恩梯梯数据有限公司. All rights reserved.
+//
+
+//-----商品详细页----
+
+
+#import "RegisterViewController.h"
+#import "WebViewController.h"
+@interface RegisterViewController (){
+    BOOL isSelected;
+    UIImageView *selectImage;
+}
+@end
+
+@implementation RegisterViewController
+@synthesize defaults;
+@synthesize scrollView;
+@synthesize _userName;
+@synthesize _userPwd;
+@synthesize _userPwdAgain;
+@synthesize addStatusBarHeight;
+
+- (void)loadView
+{
+    [super loadView];
+    // If you create your views manually, you MUST override this method and use it to create your views.
+    // If you use Interface Builder to create your views, then you must NOT override this method.
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self initialization];   //初始化
+}
+
+//初始化界面
+- (void)initialization
+{
+    addStatusBarHeight = [TopNaviViewController getStatusBarHeight];
+    defaults =[NSUserDefaults standardUserDefaults];
+    isSelected = YES;
+    
+    //----------页面表单
+    scrollView = [[UIView alloc] initWithFrame:CGRectMake(0, TOPNAVIHEIGHT+addStatusBarHeight, self.view.frame.size.width, self.view.frame.size.height)];//上半部分
+    scrollView.backgroundColor = [UIColor whiteColor];;//淡灰色
+    [self.view addSubview:scrollView];
+    
+    //登陆表单
+    UIView *loginFormArea = [[UIView alloc] initWithFrame:CGRectMake(0, 20, MAINSCREEN_WIDTH, 370)];//高度--134
+    [scrollView addSubview:loginFormArea];
+    loginFormArea.userInteractionEnabled = YES;//才可以点击它上面的textfield,
+    loginFormArea.backgroundColor = [UIColor clearColor];
+    
+    UIView *loginInput = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 280, 135+20)];
+    [loginFormArea addSubview:loginInput];
+    loginInput.backgroundColor = [UIColor clearColor];
+    loginInput.userInteractionEnabled = YES;//才可以点击它上面的textfield,
+//    loginInput.layer.cornerRadius = 5;
+//    loginInput.layer.borderWidth = 1;
+//    loginInput.layer.borderColor = BORDERCOLOR.CGColor;
+    
+    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    
+    UILabel *unameLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+    [loginInput addSubview:unameLb];
+    [unameLb setFont:textFont];
+    unameLb.text = @"输入账号:";
+    
+    _userName = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 44)];//高度--44
+    [loginInput addSubview:_userName];
+    [_userName setFont:textFont];
+    _userName.placeholder = @"请输入手机号/用户名(2-18位)";
+    _userName.keyboardType = UIKeyboardTypeASCIICapable;
+    _userName.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _userName.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _userName.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    //边线
+    UILabel *borderLine2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 44, 280, 0.8)];//高度--1
+    [loginInput addSubview:borderLine2];
+    borderLine2.backgroundColor = BORDERCOLOR;
+    
+    UILabel *upwdLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 45+10, 80, 44)];
+    [loginInput addSubview:upwdLb];
+    [upwdLb setFont:textFont];
+    upwdLb.text = @"输入密码:";
+    
+    //密码
+    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(80,45+10, 200, 44)];//高度--44
+    [loginInput addSubview:_userPwd];
+    [_userPwd setFont:textFont];
+    _userPwd.placeholder = @"请输入6-15位数字或字母";
+    _userPwd.secureTextEntry = YES;
+    _userPwd.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _userPwd.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    //边线
+    UILabel *borderLine3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 89+10, 280, 0.8)];//高度--1
+    [loginInput addSubview:borderLine3];
+    borderLine3.backgroundColor = BORDERCOLOR;
+    
+    UILabel *upwdAgainLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 90+20, 80, 44)];
+    [loginInput addSubview:upwdAgainLb];
+    [upwdAgainLb setFont:textFont];
+    upwdAgainLb.text = @"确认密码:";
+    
+    //密码
+    _userPwdAgain = [[UITextField alloc] initWithFrame:CGRectMake(80,90+20, 180, 44)];//高度--44
+    [loginInput addSubview:_userPwdAgain];
+    [_userPwdAgain setFont:[UIFont fontWithName:@"Helvetica" size:16]];
+    _userPwdAgain.placeholder = @"请输入确认密码";
+    _userPwdAgain.secureTextEntry = YES;
+    _userPwdAgain.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _userPwdAgain.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    UILabel *borderLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 134+20, 280, 0.8)];//高度--1
+    [loginInput addSubview:borderLine];
+    borderLine.backgroundColor = BORDERCOLOR;
+    
+    selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(40, 175, 20, 20)];
+    [loginFormArea addSubview:selectImage];
+    selectImage.layer.cornerRadius = 2;
+    selectImage.layer.borderColor = [UIColor grayColor].CGColor;
+    selectImage.userInteractionEnabled = YES;
+    [selectImage.layer setBorderWidth:0.6];
+    
+    [self setSelectImage];
+    
+    UITapGestureRecognizer *selectImageTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goToSelectImageTap)];
+    [selectImage addGestureRecognizer:selectImageTap];
+    
+    UILabel *acceptTipLb = [[UILabel alloc] initWithFrame:CGRectMake(65, 175, 150, 20)];
+    [loginFormArea addSubview:acceptTipLb];
+    [acceptTipLb setFont:textFont];
+    acceptTipLb.text = @"我已阅读并接受";
+    
+    UILabel *delegateTipLb = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 20)];
+    [loginFormArea addSubview:delegateTipLb];
+    [delegateTipLb setFont:textFont];
+    [delegateTipLb setUserInteractionEnabled:YES];
+    [delegateTipLb setTextColor:[UIColor colorWithRed:230.0/255 green:160.0/255 blue:22.0/255 alpha:1]];
+    delegateTipLb.text = @"《单耳兔商城服务协议》";
+    
+    UITapGestureRecognizer *delegateTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goToDelegateTap)];
+    [delegateTipLb addGestureRecognizer:delegateTap];
+    
+    UILabel *noSellTipLb = [[UILabel alloc] initWithFrame:CGRectMake(40,225, 200, 20)];
+    [loginFormArea addSubview:noSellTipLb];
+    [noSellTipLb setUserInteractionEnabled:YES];
+    [noSellTipLb setTextColor:[UIColor colorWithRed:230.0/255 green:160.0/255 blue:22.0/255 alpha:1]];
+    [noSellTipLb setFont:textFont];
+    noSellTipLb.text = @"《单耳兔禁售管理规范》";
+    
+    UITapGestureRecognizer *noSellTipTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goToNoSellTipTap)];
+    [noSellTipLb addGestureRecognizer:noSellTipTap];
+    
+    //login  button
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(40, 200+90, 240, 40)];//高度--44
+    [loginFormArea addSubview:loginBtn];
+    [loginBtn.layer setMasksToBounds:YES];
+    [loginBtn.layer setCornerRadius:5];//设置矩形四个圆角半径
+    loginBtn.backgroundColor = TOPNAVIBGCOLOR;
+    [loginBtn setTitle:@"免费注册" forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    [loginBtn addTarget:self action:@selector(onClickRegister) forControlEvents:UIControlEventTouchUpInside];
+    
+    //self.view的触摸手势，触摸弹下键盘
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(finishEdit:)];
+    tapGes.numberOfTapsRequired = 1;
+    tapGes.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:tapGes];
+}
+
+//取消键盘第一响应者
+- (void)finishEdit:(UITapGestureRecognizer *)ges
+{
+    if ([_userName isFirstResponder]) {
+        [_userName resignFirstResponder];
+    }
+    else if ([_userPwd isFirstResponder]) {
+        [_userPwd resignFirstResponder];
+    }
+    else if ([_userPwdAgain isFirstResponder]) {
+        [_userPwdAgain resignFirstResponder];
+    }
+}
+
+//-----修改标题,重写父类方法----
+-(NSString*)getTitle{
+    return @"注册";
+}
+//----跳转忘记密码页面页面---
+-(void) goRegister{
+    NSLog(@"goRegister------");
+}
+//----跳转注册页面---
+-(void) goForgetPwd{
+    NSLog(@"goForgetPwd------");
+}
+//-----注册
+-(void) onClickRegister{
+    if (!isSelected) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请阅读协议并同意勾选" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    NSString *uName = _userName.text;
+    NSString *uPwd = _userPwd.text;
+    NSLog(@"-------uName:%@-----uPwd:%@----",uName,uPwd);
+    [self checkRegister];
+}
+-(void) checkRegister{
+    NSString *userNameVal = _userName.text;
+    NSString *userPwdVal = _userPwd.text;
+    NSString *userPwdAgainVal = _userPwdAgain.text;
+    NSString * regex_userName = @"^[a-zA-Z0-9_-]{2,18}$";//用户名
+    NSString * regex_userPwd = @"[a-zA-Z0-9]{6,15}";//密码
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_userName];
+    //----点击确定隐藏键盘
+    if(![pred evaluateWithObject:userNameVal]){
+        [_userName becomeFirstResponder];//获取焦点
+        [self showHint:@"请填写正确用户名(数字,字母,下划线)"];
+//        [self.view makeToast:@"请填写正确用户名(数字,字母,下划线)" duration:2.0 position:@"center"];
+    }else{
+        pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_userPwd];
+        if(![pred evaluateWithObject:userPwdVal]){
+            [self showHint:@"请填写6-15位密码数字或字母"];
+//            [self.view makeToast:@"请填写6-15位密码数字或字母" duration:2.0 position:@"center"];
+            [_userPwd becomeFirstResponder];
+        }else if(![userPwdVal isEqualToString:userPwdAgainVal]){
+            [self showHint:@"两次输入密码不一致"];
+//            [self.view makeToast:@"两次输入密码不一致" duration:2.0 position:@"center"];
+            [_userPwd becomeFirstResponder];
+        }else{
+                [Waiting show];
+                //--所有字段格式都正确,可以注册
+                [_userName resignFirstResponder];
+                [_userPwd resignFirstResponder];
+                [_userPwdAgain resignFirstResponder];
+            
+                AFHTTPClient * client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:APIURL]];
+                NSDictionary * params = @{@"apiid": @"0011",@"uid" : _userName.text,@"pwd": _userPwd.text,@"email":@""};
+                NSURLRequest * request = [client requestWithMethod:@"POST"
+                                                              path:@""
+                                                        parameters:params];
+                AFHTTPRequestOperation * operation = [client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [Waiting dismiss];//隐藏loading
+                    NSString* source = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                    /*
+                     source:  true
+                     source:  该用户名已注册
+                     */
+                    NSDictionary *nb = [NSDictionary dictionaryWithObjectsAndKeys:_userName.text,@"MemLoginID", nil];
+                    NSLog(@"---didFinishRequestRegister---%@,%@,",source,[nb valueForKey:@"MemLoginID"]);
+                    if([source isEqualToString:@"false"]){
+                        [self.view makeToast:@"注册成功" duration:2.0 position:@"center"];
+                        //-----注册成功切换到登陆-----
+                        [self performSelector:@selector(backTo) withObject:nil afterDelay:1.0f];
+                    }else{
+                        [_userName becomeFirstResponder];
+                        [self.view makeToast:@"此用户名已注册" duration:2.0 position:@"top"];
+                    }
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [self.view makeToast:@"请检查网络连接是否正常" duration:2.0 position:@"top"];
+                    [Waiting dismiss];//隐藏loading
+                }];
+                [operation start];
+            }
+}
+}
+//--返回
+-(void)backTo{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)setSelectImage{
+    if (isSelected) {
+        selectImage.image = [UIImage imageNamed:@"select_yes"];
+    }else{
+        selectImage.image = nil;
+    }
+}
+
+-(void)goToSelectImageTap{
+    if (isSelected) {
+        isSelected = NO;
+    }else{
+        isSelected = YES;
+    }
+    [self setSelectImage];
+}
+
+-(void)goToDelegateTap{
+    WebViewController *web = [[WebViewController alloc] init];
+    web.hidesBottomBarWhenPushed = YES;
+    web.webTitle = @"《单耳兔商城服务协议》";
+    web.narBarOffsetY = 44;
+    web.webURL = DANERTUSERVICEPROTOCOL;
+    web.webType =  @"webUrl";
+    [self.navigationController pushViewController:web animated:YES];
+}
+
+-(void)goToNoSellTipTap{
+    WebViewController *web = [[WebViewController alloc] init];
+    web.narBarOffsetY = 44;
+    web.hidesBottomBarWhenPushed = YES;
+    web.webTitle = @"《单耳兔禁售管理规范》";
+    web.webURL = DANERTUSELLPROTOCOL;
+    web.webType =  @"webUrl";
+    [self.navigationController pushViewController:web animated:YES];
+}
+//-----------内存不足报警------
+-(void)didReceiveMemoryWarning
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [super didReceiveMemoryWarning];
+    NSLog(@"memory warning,kkappdelegate---");
+}
+@end

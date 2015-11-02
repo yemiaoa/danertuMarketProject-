@@ -1,0 +1,25 @@
+//
+//  WebViewController.h
+//  Tuan
+//
+//  Created by 夏 华 on 12-7-6.
+//  Copyright (c) 2012年 无锡恩梯梯数据有限公司. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
+#import "UIView+Toast.h"
+#import "WoodDataController.h"
+#import "DanertuWoodsController.h"
+
+@interface ClassifyDetailController : HeBaseViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
+
+@property (nonatomic) int addStatusBarHeight;
+@property (nonatomic, strong) NSUserDefaults *defaults;//本地化存储
+@property (nonatomic,strong) UILabel *topNaviClassifyText ;
+@property (nonatomic,strong) NSDictionary *selectTypeDic;
+@property (nonatomic,strong) NSArray *classifyDataArr;
+@property (nonatomic, strong)NSString *shopID; //该分类所在的店铺的ID
+
+@end
